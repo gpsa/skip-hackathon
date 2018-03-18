@@ -1,12 +1,19 @@
 #!/bin/bash
-if [ ! -L .git/hooks/pre-push ] ; then
-    ln -s hooks/pre-push .git/hooks/pre-push
+
+cd .git/hooks
+
+if [ -L pre-push ] ; then
+    rm pre-push
 fi
+
+ln -s ../../hooks/pre-push pre-push
+
+cd -
 
 docker-compose up -d --build
 
 if [ ! -d vendor ] ; then
     docker-compose exec zf composer install -vvv
 else
-    docker-compose exec zf composer update -vvv
+    docker-compose exec zf composer update
 fi
