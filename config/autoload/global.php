@@ -13,4 +13,11 @@
 
 return [
     // ...
+     // zend-mvc:
+    'service_manager' => [
+        'abstract_factories' => [
+            \Zend\ServiceManager\AbstractFactory\ConfigAbstractFactory::class,
+        ],
+    ],
+
 ];
