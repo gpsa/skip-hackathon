@@ -1,3 +1,5 @@
+# SkipHackathon
+- test commit
 # ZendSkeletonApplication
 
 ## Introduction
