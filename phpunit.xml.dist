@@ -11,14 +11,11 @@
     <testsuite name="Application">
         <directory>./module/Application/test</directory>
     </testsuite>
-    <filter>
-        <whitelist addUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./src</directory>
-        </whitelist>
+<!--    <filter>
         <blacklist>
             <directory>./vendor</directory>
         </blacklist>
-    </filter>
+    </filter>-->
     <logging>
         <log type="coverage-html" target="./build/coverage" title="Name of Project"
              charset="UTF-8" yui="true" highlight="true"
