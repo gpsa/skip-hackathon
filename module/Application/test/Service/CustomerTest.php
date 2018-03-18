@@ -88,6 +88,11 @@ class CustomerTest extends TestCase
      */
     public function testMakeOrder()
     {
-        $this->assertTrue(true);
+        if(getenv("FORCE_ERROR")){
+            $this->assertTrue(false);
+        }
+        else{ 
+            $this->assertTrue (true);
+        }
     }
 }
