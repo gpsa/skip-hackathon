@@ -40,7 +40,7 @@ class CustomerTest extends TestCase
         ]);
         $config->configureServiceManager($this->serviceManager);
     }
-    
+
     private function getHttpClient()
     {
         return new \Zend\Http\Client(null, array('adapter' => \Zend\Http\Client\Adapter\Socket::class));
@@ -74,25 +74,34 @@ class CustomerTest extends TestCase
      * @param type $token
      * @depends testLogin
      */
-    public function testOrder($token)
+    public function testOrderList($token)
     {
         $config = $this->serviceManager->get('config');
 
-        $params = array('email' => 'guilhermepsa@gmail.com', 'password' => '123456');
-
         $request = new \Zend\Http\Request();
         $request->setMethod(\Zend\Http\Request::METHOD_GET);
-        $request->setContent(json_encode($params));
         $request->getHeaders()->addHeaders([
             'content-type' => 'application/json',
-            'Authorization' => 'JWT ' . $token
+            'accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token
         ]);
 
-        // $request->setContent($json);
         $request->setUri($config['api']['endpoint'] . '/api/v1/Order/customer');
         $response = $this->getHttpClient()->send($request);
 
-        var_dump($response->getStatusCode(), $response->getBody());
-        exit;
+        $this->assertEquals(200, $response->getStatusCode());
+        $customerOrders = json_decode($response->getBody());
+
+        $this->assertInternalType('array', $customerOrders);
+    }
+    
+    /**
+     * 
+     * @param type $token
+     * @depends testLogin
+     */
+    public function testMakeOrder()
+    {
+        $this->assertTrue(true);
     }
 }
