@@ -102,6 +102,6 @@ class CustomerTest extends TestCase
      */
     public function testMakeOrder()
     {
-        $this->assertTrue(true);
+        $this->assertTrue(false);
     }
 }
