@@ -40,12 +40,16 @@ class CustomerTest extends TestCase
         ]);
         $config->configureServiceManager($this->serviceManager);
     }
+    
+    private function getHttpClient()
+    {
+        return new \Zend\Http\Client(null, array('adapter' => \Zend\Http\Client\Adapter\Socket::class));
+    }
 
     public function testLogin()
     {
         $config = $this->serviceManager->get('config');
 
-        $client = new \Zend\Http\Client(null, array('adapter' => \Zend\Http\Client\Adapter\Curl::class));
 
         $params = array('email' => 'guilhermepsa@gmail.com', 'password' => '123456');
 
@@ -58,7 +62,7 @@ class CustomerTest extends TestCase
 
         // $request->setContent($json);
         $request->setUri($config['api']['endpoint'] . '/api/v1/Customer/auth');
-        $response = $client->send($request);
+        $response = $this->getHttpClient()->send($request);
 
         $this->assertEquals(200, $response->getStatusCode());
 
@@ -74,10 +78,6 @@ class CustomerTest extends TestCase
     {
         $config = $this->serviceManager->get('config');
 
-        $client = new \Zend\Http\Client(null, array('adapter' => \Zend\Http\Client\Adapter\Curl::class,
-            'curloptions' => [CURLOPT_CONNECTTIMEOUT => 10000],
-        ));
-
         $params = array('email' => 'guilhermepsa@gmail.com', 'password' => '123456');
 
         $request = new \Zend\Http\Request();
@@ -90,7 +90,7 @@ class CustomerTest extends TestCase
 
         // $request->setContent($json);
         $request->setUri($config['api']['endpoint'] . '/api/v1/Order/customer');
-        $response = $client->send($request);
+        $response = $this->getHttpClient()->send($request);
 
         var_dump($response->getStatusCode(), $response->getBody());
         exit;
