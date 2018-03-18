@@ -74,7 +74,7 @@ class CustomerTest extends TestCase
      * @param type $token
      * @depends testLogin
      */
-    public function tesat1Order($token)
+    public function testOrder($token)
     {
         $config = $this->serviceManager->get('config');
 
