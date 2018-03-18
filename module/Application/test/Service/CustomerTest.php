@@ -76,23 +76,9 @@ class CustomerTest extends TestCase
      */
     public function testOrderList($token)
     {
-        $config = $this->serviceManager->get('config');
-
-        $request = new \Zend\Http\Request();
-        $request->setMethod(\Zend\Http\Request::METHOD_GET);
-        $request->getHeaders()->addHeaders([
-            'content-type' => 'application/json',
-            'accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $token
-        ]);
-
-        $request->setUri($config['api']['endpoint'] . '/api/v1/Order/customer');
-        $response = $this->getHttpClient()->send($request);
-
-        $this->assertEquals(200, $response->getStatusCode());
-        $customerOrders = json_decode($response->getBody());
-
-        $this->assertInternalType('array', $customerOrders);
+        $customer = new Customer($this->serviceManager->get('config'));
+        
+        $this->assertInternalType('array', $customer->getOrders($token));
     }
     
     /**
@@ -102,6 +88,6 @@ class CustomerTest extends TestCase
      */
     public function testMakeOrder()
     {
-        $this->assertTrue(true);
+        $this->assertTrue(false);
     }
 }
